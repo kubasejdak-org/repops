@@ -1,0 +1,14 @@
+---
+# Sample configuration file for Repops
+repositories:
+  - name: repo1
+    path: /path/to/repo1
+    main_branch: main
+    language: python
+    remote_url: https://github.com/username/repo1.git
+    
+  - name: repo2
+    path: /path/to/repo2
+    main_branch: master
+    language: javascript
+    remote_url: https://github.com/username/repo2.git
