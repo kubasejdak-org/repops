@@ -1,0 +1,18 @@
+[project]
+name = "repops"
+version = "0.1.0"
+description = "Tool for managing and updating repositories"
+readme = "README.md"
+authors = [{ name = "Kuba Sejdak", email = "kuba.sejdak@gmail.com" }]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+repops = "repops:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8.3.5", "ruff>=0.11.8"]
