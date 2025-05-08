@@ -2,33 +2,35 @@
 
 ## Functional requirements
 
-1. App should allow making a pipeline of operations that should be applied to the given repository.
+1. App should allow making a pipeline of operations that should be applied to the given repository:
+   1. The primary method for defining operation pipelines should be via TUI in the console.
+   2. Additionally, the app should support defining pipelines via YAML configuration files.
 2. App should have a modular architecture based on plugins or set of commands (actions), that can be easily extended.
 3. App should load a list of repositories to be managed from YAML file (default name should be `repos.yml`).
 4. App should support at least the following operations:
-    1. common:
-        1. git:
-            1. cloning repository,
-            2. pulling changes (without loosing local unstaged changes),
-            3. creating pull requests (PR) on the following platforms:
-                1. GitHub,
-                2. Azure DevOps,
-                3. GitLab.
-            4. creating, removing and changing branches,
-            5. creating tags,
-            6. obtaining and saving HEAD revisions of all managed repositories.
-        2. files:
-            1. copying given files or directories to the selected repository,
-            2. applying given patch/diff to the selected repository,
-            3. performing "find" operation,
-            4. performing "find and replace" operation.
-        3. script:
-            1. executing given script or shell expression on given repository.
-    2. c++:
-        1. cmake:
-            1. listing dependencies based on `Find*.cmake` files,
-            2. creating dependency graph between repositories (to know the order in which changes should be applied),
-            3. updating dependencies for given repository to HEAD revisions according to the dependency graph.
+   1. common:
+      1. git:
+         1. cloning repository,
+         2. pulling changes (without loosing local unstaged changes),
+         3. creating pull requests (PR) on the following platforms:
+            1. GitHub,
+            2. Azure DevOps,
+            3. GitLab.
+         4. creating, removing and changing branches,
+         5. creating tags,
+         6. obtaining and saving HEAD revisions of all managed repositories.
+   2. files:
+      1. copying given files or directories to the selected repository,
+      2. applying given patch/diff to the selected repository,
+      3. performing "find" operation,
+      4. performing "find and replace" operation.
+   3. script:
+      1. executing given script or shell expression on given repository.
+   4. c++:
+      1. cmake:
+         1. listing dependencies based on `Find*.cmake` files,
+         2. creating dependency graph between repositories (to know the order in which changes should be applied),
+         3. updating dependencies for given repository to HEAD revisions according to the dependency graph.
 5. Repository-related operations should be independent from any programming language wherever possible, but should
    provide modules for creating a language-specific behavior.
 6. App should treat each defined operation as separate commit to the given repository within the same PR.
