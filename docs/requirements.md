@@ -31,7 +31,8 @@
       1. URL: The git repository URL.
       2. Main Branch Name: The default branch to use (e.g., main, master).
       3. Local Path: The local filesystem path where the repository should be cloned.
-      4. Server Type: The type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific operations.
+      4. Server Type: The type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific
+         operations.
    2. The app should automatically clone repositories defined in the configuration file if they are not present at the
       specified location.
 4. App should support at least the following operations:
@@ -71,8 +72,8 @@
    provide modules for creating a language-specific behavior:
    1. The application should have a mechanism to detect the programming language of files being modified.
    2. Language-specific operations should be grouped by programming language in the plugin architecture.
-   3. For code modification operations, the app should have plugins that understand the syntax and structure 
-      of different programming languages (initially C++ as specified in requirement 4.4).
+   3. For code modification operations, the app should have plugins that understand the syntax and structure of
+      different programming languages (initially C++ as specified in requirement 4.4).
    4. Examples of language-specific behaviors include:
       1. Parsing and understanding dependencies in different build systems
       2. Modifying code with awareness of language syntax
@@ -85,7 +86,8 @@
    2. Each operation included in the PR should be represented as a separate commit.
    3. Authentication for Git operations (including PR creation) should use SSH keys configured outside the application.
    4. The app should use the default branch specified in the repository configuration as the target branch for PRs.
-   5. If the specified default branch does not exist on the remote repository, the app should stop execution with a clear error message.
+   5. If the specified default branch does not exist on the remote repository, the app should stop execution with a
+      clear error message.
 8. App should provide two interface modes:
    1. TUI mode (implemented with `textual`):
       1. This should be the default and primary mode of interaction with the application.
@@ -94,8 +96,8 @@
       4. TUI should display operation status and progress during pipeline execution.
    2. CLI interface:
       1. Designed for one-shot operations and automation scripts.
-      2. Should provide a dedicated group of commands to manage repositories without manual editing of the
-         repos config file (default `repos.yml`):
+      2. Should provide a dedicated group of commands to manage repositories without manual editing of the repos config
+         file (default `repos.yml`):
          1. Adding or removing repository from config file.
          2. Changing repository URL.
          3. Changing repository path on disk to be used.
