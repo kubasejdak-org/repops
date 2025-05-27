@@ -7,7 +7,6 @@ applyTo: "**/*.py"
 - Use type hints wherever possible.
 - Use f-strings for string formatting.
 - Do not add unused imports. Remove anything that is not needed.
-- Always add docstrings to functions and classes with prefix: "Copilot Docs for Kuba".
 - Write pythonic code with common Python coding conventions in mind.
 
 ## Dependencies management
