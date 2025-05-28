@@ -6,13 +6,14 @@
 
 1. App should load a list of repositories to be managed from YAML file (default name should be `repos.yml`).
 2. Each repository entry in the configuration file should include:
-   1. URL: URL of the remote git repository.
-   2. Main Branch Name: Default branch to use (e.g., main, master).
-   3. Local Path: The local filesystem path where the repository should be cloned.
-   4. Server Type: The type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific
+   1. URL: URL of the remote git repository,
+   2. main branch name: default branch to use (e.g., main, master),
+   3. local path: local filesystem path where the repository should be cloned,
+   4. server type: type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific
       operations.
-3. App should allow checking if all defined in config repositories are actually available at specified location and
-   clone them if not.
+3. App should allow checking if all repositories defined in config are actually available at specified location and
+   fetch them if not.
+4. App should allow creating, editing, saving and removing config files.
 
 ### 2. Operations
 
@@ -20,12 +21,12 @@
 2. Operation is a defined action that can operate on given repository to modify files, VCS config or produce other
    output to be used by other operations.
 3. Operation should have a unique string ID in a form of "x.y.z.OperationName" where each string separated by dot is a
-   name of package/module where operation is located in repo structure (e.g. creating PR on GitHub could have an ID
-   "vcs.github.pr.Create").
+   name of package/module where operation is located in project's repo structure (e.g. creating PR on GitHub could have
+   an ID "vcs.github.pr.Create").
    1. Operation ID should be constructed automatically using its source code location relative to "ops" package.
    2. Last token of operation ID should be its name and equal to class which implements it.
 4. All operations should inherit from base class to ensure common interface and structure, including:
-   1. human readable description.
+   1. human readable description,
    2. source type, which can be one of: predefined, plugin (with plugin/package name) or local (with filesystem
       location),
    3. methods for operation execution, validation, and metadata (like name, description, parameters),
