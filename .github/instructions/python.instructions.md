@@ -21,4 +21,5 @@ applyTo: "**/*.py"
 
 ## Testing
 
-- Use "pytest" as test framework configured with "code coverage" check.
+- Use "pytest" as test framework configured with code coverage via "pytest-cov".
+- Aim for 100% code coverage, except for handling system errors or similar cases which are hard to simulate.
