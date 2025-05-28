@@ -76,7 +76,9 @@
     1. it should include all operations executed since the previous PR operation (or from the beginning of the pipeline
        if no previous PR operation exists),
     2. each operation included in the PR should be represented as a separate commit,
-    3. app should use the default branch specified in the repository configuration as target branch in the PR.
+    3. app should use the default branch specified in the repository configuration as target branch in the PR,
+    4. If the specified target branch does not exist in the remote repository, app should stop execution with a clear
+       error message.
 11. Authentication for Git operations (including PR creation) should use SSH keys configured outside the application.
 
 ### 3. Pipelines
@@ -126,9 +128,7 @@
 
 ### TODO
 
-   1. If the specified default branch does not exist on the remote repository, the app should stop execution with a
-      clear error message.
-   2. App should provide two interface modes:
+   1. App should provide two interface modes:
       1. TUI mode (implemented with `textual`):
          1. This should be the default and primary mode of interaction with the application.
          2. TUI should provide full access to defining and executing operation pipelines.
