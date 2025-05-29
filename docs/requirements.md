@@ -91,7 +91,7 @@
 
 ### 3. Pipelines
 
-1. App should allow making a pipeline of operations that should be applied to the given repository.
+1. App should allow making a pipeline of operations that will be applied to the given repository.
 2. Pipeline is a sequential list of operations to be executed in order.
 3. App should allow specifying repositories for pipeline to operate on.
    1. Repository selection should be separate from the pipeline mechanics.
@@ -108,18 +108,19 @@
    1. by loading its full defeinition from YAML file,
    2. by manually constructing it in the app from scratch.
 7. App should allow loading and saving pipeline to and from YAML file.
-8. App should be able to have a predefined local list of pipelines.
+8. App should be able to have a predefined builtin list of pipelines.
 
 ### 4. Plugins
 
-1. User should be able to use custom plugins providing additional operations and pipeline definitions.
+1. User should be able to use custom plugins, which are external to the app, providing additional operations
+   and pipeline definitions.
 2. Plugins should be discoverable by the app in two forms:
    1. by installing external Python package,
    2. by pointing to the local plugin directory.
 3. Internally, both methods should have a common low-level implementation.
-4. Plugin system should allow defining and saving new local pipelines and operations.
-5. Plugin system should use Python's entry points mechanism (via `hatchling`):
-   1. Core operations should be registered under a "repops.ops" entry point.
+4. Plugin system should allow defining and saving new local pipelines and operations directly from the app.
+5. Plugin system should use Python's entry points mechanism (via `hatchling`).
+   1. Builtin operations should be registered under a `repops.ops` entry point.
    2. External plugins should be discoverable by registering to the same entry point namespace.
    3. Each entry point should specify an operation class that implements a standard interface.
    4. App should scan for all available entry points at startup and register all discovered operations.
@@ -127,7 +128,7 @@
 ### 5. UI
 
 1. App should have a 3 ways of interacting with it:
-   1. console TUI mode based on Textual library for full application usage,
+   1. console TUI mode based on `Textual` library for full application usage,
    2. console CLI mode based on command line arguments for performing simple operations,
    3. MCP server mode based on official MCP SDK to allow integratin with LLMs which support MCP servers.
 2. App should be able to list all available operations.
