@@ -156,39 +156,21 @@
 
 ## Non-functional requirements
 
-1. Project should be written in Python.
-2. Project should use `uv` workflow for comprehensive project management:
-   1. Dependency management:
-      1. Using `uv add` for installing production dependencies.
-      2. Using `uv add --dev` for installing development dependencies.
-      3. Maintaining a clear separation between production and development dependencies.
-   2. Environment management:
-      1. Using `uv venv` for creating and managing virtual environments.
-      2. Ensuring reproducible environments with `uv.lock` file.
-   3. Development workflows:
-      1. Running tests with `uv run pytest` with coverage reporting.
-      2. Running linting with `uv run ruff check`.
-      3. Applying automatic fixes with `uv run ruff check --fix`.
-      4. Using `uv run` for all scripts defined in `pyproject.toml`.
-   4. Building and packaging:
-      1. Using `uv build` to create distribution packages.
-      2. Generating both source distributions (sdist) and wheel packages.
-   5. Publishing:
-      1. Using `uv pip publish` for publishing to PyPI or other package repositories.
-3. Architecture:
-   1. App should have a modular architecture, allowing to expand list of operations.
-   2. Predefined operations should be categorized within the app by their domain.
-4. Documentation:
-   1. App should provide clear documentation and examples for creating plugins.
-5. Code quality:
-   1. Project should use `ruff` for checking for formatting and linting issues.
-   2. Code formatting should be enforced through automated checks in CI/CD.
-6. Testing:
-   1. Project should have unit and integration tests in `pytest` with code coverage support via `pytest-cov`.
-   2. Test coverage threshold should be defined and enforced.
-7. Error handling and logging:
-   1. Application should use Python's standard logging mechanism to report errors and operation status.
-   2. Any error encountered during operation execution should terminate the pipeline and abort the application.
-   3. Error messages should be descriptive and provide meaningful information about what went wrong.
-   4. Logging levels should include DEBUG, INFO, WARNING, ERROR, and CRITICAL.
-   5. Logs should be displayed in the console and optionally saved to a file.
+1. Application should be reliable and handle errors gracefully, providing meaningful error messages.
+2. Application should be maintainable and support modular expansion of operations.
+3. Application should provide clear and informative logging with multiple log levels.
+4. Application should be well-documented, including usage and plugin development guides.
+5. Application should be testable, with unit and integration tests and enforced code coverage thresholds.
+6. Application should enforce code quality through automated checks and formatting.
+
+## Technical constraints
+
+1. Project must be written in Python.
+2. Project must use the `uv` tool for dependency, environment, and workflow management.
+3. Project must use `pytest` for testing and `pytest-cov` for coverage.
+4. Project must use `ruff` for linting and formatting.
+5. Project must use `hatchling` and Python entry points for plugin discovery.
+6. Project must use the `Textual` library for TUI and support CLI and MCP server modes.
+7. Project must maintain a clear separation between production and development dependencies.
+8. Project must use `uv.lock` for reproducible environments.
+9. Project must use `uv build` for packaging and `uv pip publish` for publishing.
