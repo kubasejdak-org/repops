@@ -7,78 +7,85 @@
 1. App should load a list of repositories to be managed from YAML file (default name should be `repos.yml`).
 2. Each repository entry in the configuration file should include:
    1. URL: URL of the remote git repository,
-   2. main branch name: default branch to use (e.g., main, master),
+   2. main branch name: default branch to use (e.g. `main`, `develop`),
    3. local path: local filesystem path where the repository should be cloned,
    4. server type: type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific
       operations.
-3. App should allow checking if all repositories defined in config are actually available at specified location and
+3. Config file should allow dividing repositories into subgroups.
+4. App should allow checking if all repositories defined in config are actually available at specified location and
    fetch them if not.
-4. App should allow creating, editing, saving and removing config files.
+5. App should allow creating, editing, saving and removing config files.
 
 ### 2. Operations
 
 1. App should allow executing operations on the given repository.
 2. Operation is a defined action that can operate on given repository to modify files, VCS config or produce other
    output to be used by other operations.
-3. Operation should have a unique string ID in a form of "x.y.z.OperationName" where each string separated by dot is a
-   name of package/module where operation is located in project's repo structure (e.g. creating PR on GitHub could have
-   an ID "vcs.github.pr.Create").
-   1. Operation ID should be constructed automatically using its source code location relative to "ops" package.
-   2. Last token of operation ID should be its name and equal to class which implements it.
+3. Operation should have a unique string ID in a form of `source.x.y.z.OperationName`.
+   1. `source` should indicate operation's source type:
+      1. `repops` type should translate to `repops`,
+      2. `plugin` type should translate to plugin's package name,
+      3. `local` type should translate to `local`.
+   2. Each string separated by dot (`x`, `y`, `z`) is a name of package/module where operation is located in project's
+      repo structure (e.g. creating PR on GitHub can have an ID `repops.vcs.github.pr.Create`).
+   3. Last token of operation ID should be its name and equal to class which implements it.
+   4. Operation ID should be created automatically upon construction.
 4. All operations should inherit from base class to ensure common interface and structure, including:
    1. human readable description,
-   2. source type, which can be one of: predefined, plugin (with plugin/package name) or local (with filesystem
+   2. source type, which can be one of: `repops`, `plugin` (with plugin's package name) or `local` (with filesystem
       location),
-   3. methods for operation execution, validation, and metadata (like name, description, parameters),
+   3. methods for operation execution, validation, and metadata (like name, description, arguments),
    4. support for operation dependencies (operations that must be run before/after),
-   5. standard error handling and logging interfaces.
+   5. standard error handling (via exceptions) and logging interfaces (via logger).
 5. Operation can have a set of expected arguments to be used by the operation.
    1. Arguments can be of any type, which is supported by YAML syntax.
    2. Arguments should be marked as required or optional in operation definition.
-6. Operation should be able to use special context for passing information from and to other operations.
-7. Operation should raise special exception when it fails to execute.
+6. Operation should be able to use special context for passing information from and to other operations upon execution.
+7. Operation should raise proper exception when it fails to execute.
    1. Exceptions should be categorized by operation domain.
    2. There should be a separate exception category for common errors (like missing arguments etc.).
 8. App should have the following list of predefined operations:
    1. vcs:
       1. git:
-         1. cloning repository,
-         2. pulling changes (without loosing local unstaged changes),
-         3. creating pull requests (PR) on the following platforms:
-            1. GitHub,
-            2. Azure DevOps,
-            3. GitLab.
-         4. creating, removing and changing branches,
-         5. creating tags,
-         6. obtaining and saving HEAD revisions of all managed repositories,
-         7. applying git patches.
+         1. clone repository,
+         2. pull and push changes (without loosing local unstaged changes),
+         3. create, remove and change branches,
+         4. create tags,
+         5. obtain and save to context HEAD revisions of all managed repositories,
+         6. apply git patches.
+      2. GitHub:
+         1. create pull request (PR).
+      3. Azure DevOps:
+         1. create pull request (PR).
+      4. GitLab:
+         1. create pull request (PR).
    2. files:
-      1. copying given files or directories from a reference repository to selected target repositories,
-      2. applying given patch/diff from a reference repository to selected target repositories,
-      3. performing "find" operation across specified files or entire repositories,
-      4. performing "find and replace" operation across specified files or entire repositories,
-      5. reflecting changes from a reference repository to all other specified repositories in a pipeline.
+      1. copy given files or directories from a reference repository to selected target repositories,
+      2. apply given patch/diff from a reference repository to selected target repositories,
+      3. perform "find" operation across specified files or entire repositories,
+      4. perform "find and replace" operation across specified files or entire repositories,
+      5. reflect changes from a reference repository to all other specified repositories in a pipeline.
    3. script:
-      1. executing given script or shell expression on given repository.
+      1. execute given script or shell expression on given repository.
    4. c++:
       1. cmake:
-         1. listing dependencies based on `Find*.cmake` files,
-         2. creating dependency graph between repositories based on CMake dependencies,
-         3. determining the topological order for repository updates based on the dependency graph,
-         4. automating the process of updating dependencies across repositories in the correct order:
-            1. ensuring each repository uses the latest version of its dependencies,
-            2. propagating these updates through the dependency chain,
-            3. updating CMake files to reference the latest versions of dependencies.
+         1. list dependencies based on `Find*.cmake` files,
+         2. create dependency graph between repositories based on CMake dependencies,
+         3. determine the topological order for repository updates based on the dependency graph,
+         4. update dependencies across repositories in the correct order:
+            1. ensure each repository uses the latest version of its dependencies,
+            2. propagate these updates through the dependency chain,
+            3. update CMake files to reference the latest versions of dependencies.
 9. All file operations should support path patterns for inclusion and exclusion of files:
-   1. allow selecting files based on glob patterns (e.g., `*.cpp`, `src/**/*.h`),
+   1. allow selecting files based on glob patterns (e.g. `*.cpp`, `src/**/*.h`),
    2. allow excluding specific files or directories from operations,
    3. support common ignore patterns (similar to .gitignore).
-10. When a PR operation is encountered in the pipeline:
-    1. it should include all operations executed since the previous PR operation (or from the beginning of the pipeline
+10. All PR operations should have the following semantics:
+    1. PR should include all operations executed since the previous PR operation (or from the beginning of the pipeline
        if no previous PR operation exists),
     2. each operation included in the PR should be represented as a separate commit,
-    3. app should use the default branch specified in the repository configuration as target branch in the PR,
-    4. If the specified target branch does not exist in the remote repository, app should stop execution with a clear
+    3. app should use default branch specified in the repository configuration as target branch in the PR by default,
+    4. if the specified target branch does not exist in the remote repository, app should stop execution with a clear
        error message.
 11. Authentication for Git operations (including PR creation) should use SSH keys configured outside the application.
 
