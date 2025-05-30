@@ -89,9 +89,10 @@
 10. All PR operations should have the following semantics:
     1. PR should include all operations executed since the previous PR operation (or from the beginning of the pipeline
        if no previous PR operation exists),
-    2. each operation included in the PR should be represented as a separate commit,
-    3. app should use default branch specified in the repository configuration as target branch in the PR by default,
-    4. if the specified target branch does not exist in the remote repository, app should stop execution with a clear
+    2. PR should not be created if there are no commits in it,
+    3. each operation included in the PR should be represented as a separate commit (if it has any changes),
+    4. app should use default branch specified in the repository configuration as target branch in the PR by default,
+    5. if the specified target branch does not exist in the remote repository, app should stop execution with a clear
        error message.
 11. Authentication for Git operations (including PR creation) should use SSH keys configured outside the application.
 12. App should allow editing commit messages and PR description for every operation in the pipeline.
@@ -167,11 +168,10 @@
 ## Technical constraints
 
 1. Project must be written in Python.
-2. Project must use the `uv` tool for dependency, environment, and workflow management.
-3. Project must use `pytest` for testing and `pytest-cov` for coverage.
-4. Project must use `ruff` for linting and formatting.
+2. Project must use `uv` for workflow, dependency, environment and packaging management.
+3. Project must use `ruff` for linting and formatting.
+4. Project must use `pytest` for testing and `pytest-cov` for coverage.
 5. Project must use `hatchling` and Python entry points for plugin discovery.
-6. Project must use the `Textual` library for TUI and support CLI and MCP server modes.
-7. Project must maintain a clear separation between production and development dependencies.
-8. Project must use `uv.lock` for reproducible environments.
-9. Project must use `uv build` for packaging and `uv pip publish` for publishing.
+6. Project must use `Textual` library for TUI.
+7. Project must use `Typer` library for CLI.
+8. Project must maintain a clear separation between production and development dependencies.
