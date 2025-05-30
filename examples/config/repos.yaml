@@ -1,0 +1,16 @@
+group1:
+  repo1:
+    url: some-url
+    server: github
+    path: /home/user/projects/repo1
+    defaultBranch: main
+  repo2:
+    url: some-url2
+    server: azure-devops
+    path: /home/user/projects/repo2
+    defaultBranch: develop
+repo3:
+  url: some-url3
+  server: gitlab
+  path: /home/user/projects/repo3
+  defaultBranch: main
