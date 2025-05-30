@@ -15,8 +15,10 @@
    2. Only a single level of grouping is supported.
    3. If a repository is not part of any group, it should be automatically included under a predefined "default" group.
    4. Config should follow syntax as in [`example`](../../examples/config/config.example.yaml).
-4. App should allow checking if all repositories defined in config are actually available at specified location and
-   fetch them if not.
+4. App should allow checking if all repositories defined in config are actually available both locally and remotely:
+   1. Locally: verify if the repository exists at the specified local path.
+   2. Remotely: verify if the remote repository URL is accessible (e.g. using a git command like `ls-remote`).
+   3. If a repository is not available locally, the app should fetch (clone) it.
 5. App should allow creating, editing, saving and removing config files.
 
 ### 2. Operations
