@@ -88,6 +88,7 @@
     4. if the specified target branch does not exist in the remote repository, app should stop execution with a clear
        error message.
 11. Authentication for Git operations (including PR creation) should use SSH keys configured outside the application.
+12. App should allow editing commit messages and PR description for every operation in the pipeline.
 
 ### 3. Pipelines
 
@@ -127,32 +128,25 @@
 
 ### 5. UI
 
-1. App should have a 3 ways of interacting with it:
-   1. console TUI mode based on `Textual` library for full application usage,
-   2. console CLI mode based on command line arguments for performing simple operations,
-   3. MCP server mode based on official MCP SDK to allow integratin with LLMs which support MCP servers.
-2. App should be able to list all available operations.
-   1. List should include operation ID, name, source and description.
-   2. List should have a possibility to filter by ID, name or source patterns.
-
-### TODO
-
-   1. App should provide two interface modes:
-      1. TUI mode (implemented with `textual`):
-         1. This should be the default and primary mode of interaction with the application.
-         2. TUI should provide full access to defining and executing operation pipelines.
-         3. TUI should allow browsing and selecting repositories from the configuration.
-         4. TUI should display operation status and progress during pipeline execution.
-      2. CLI interface:
-         1. Designed for one-shot operations and automation scripts.
-         2. Should provide a dedicated group of commands to manage repositories without manual editing of the repos config
-               file (default `repos.yml`):
-               1. Adding or removing repository from config file.
-               2. Changing repository URL.
-               3. Changing repository path on disk to be used.
-               4. Changing default branch name to be used.
-               5. All CLI commands that modify the repository configuration should directly update the config file.
-         3. Allow execution of predefined pipelines from YAML configuration files.
+1. App should have a console TUI mode for full application control.
+   1. It should be based on `Textual` library.
+   2. TUI mode should allow the following actions:
+      1. load, create, view, edit, save and remove repositories config files,
+      2. load, create, view, edit, save and remove pipeline config files,
+      3. list all available operations (with ID, name, source and description),
+      4. list all available pipelines (with source),
+      5. preview given operation (with arguments description),
+      6. select repositories for pipeline execution,
+      7. execute given pipeline,
+      8. preview VCS changes for given repository,
+      9. edit commit messages and PR descriptions,
+      10. displaying progress of the currently executed pipeline.
+2. App should have a console CLI mode for simple one-shot operations.
+   1. It should be based on `Typer` library.
+   2. It should allow doing everything as in TUI mode, but
+3. App should have an MCP server mode to allow integration with LLMs supporting MCP.
+   1. It should be based on the official MCP SDK.
+   2. It should allow doing everything as in TUI mode.
 
 ## Non-functional requirements
 
@@ -162,6 +156,7 @@
 4. Application should be well-documented, including usage and plugin development guides.
 5. Application should be testable, with unit and integration tests and enforced code coverage thresholds.
 6. Application should enforce code quality through automated checks and formatting.
+7. Whole application logic should be indepedant from UI mode. UI should act as a client of the core app logic.
 
 ## Technical constraints
 
