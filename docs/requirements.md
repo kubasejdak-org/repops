@@ -7,11 +7,14 @@
 1. App should load a list of repositories to be managed from YAML file (default name should be `repos.yml`).
 2. Each repository entry in the configuration file should include:
    1. URL: URL of the remote git repository,
-   2. main branch name: default branch to use (e.g. `main`, `develop`),
+   2. default branch name: default branch to use (e.g. `main`, `develop`),
    3. local path: local filesystem path where the repository should be cloned,
-   4. server type: type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific
-      operations.
+   4. server type: type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific operations.
 3. Config file should allow dividing repositories into subgroups.
+   1. Subgroups are represented as top-level keys in the YAML file, with each repository as a nested subkey under it.
+   2. Only a single level of grouping is supported.
+   3. If a repository is not part of any group, it should be automatically included under a predefined "default" group.
+   4. Config should follow syntax as in [`example`](../../examples/config/config.example.yaml).
 4. App should allow checking if all repositories defined in config are actually available at specified location and
    fetch them if not.
 5. App should allow creating, editing, saving and removing config files.
@@ -101,8 +104,8 @@
       2. selecting a subset of repositories based on name patterns,
       3. selecting individual repositories by name.
    3. Pipelines loaded from files can have an optional predefined list of repositories to operate on by default.
-4. Each operation in pipeline can have a list of arguments with its values, with respect to which arguments are
-   required and which are optional.
+4. Each operation in pipeline can have a list of arguments with its values, with respect to which arguments are required
+   and which are optional.
 5. All data which are part of pipeline (operations, their order, arguments, repositories to operate on, etc.) should be
    possible to be overwritten in app once loaded.
 6. Pipelines can be created by two methods:
@@ -113,8 +116,8 @@
 
 ### 4. Plugins
 
-1. User should be able to use custom plugins, which are external to the app, providing additional operations
-   and pipeline definitions.
+1. User should be able to use custom plugins, which are external to the app, providing additional operations and
+   pipeline definitions.
 2. Plugins should be discoverable by the app in two forms:
    1. by installing external Python package,
    2. by pointing to the local plugin directory.
