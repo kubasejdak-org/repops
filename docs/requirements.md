@@ -4,22 +4,26 @@
 
 ### 1. Config
 
-1. App should load a list of repositories to be managed from YAML file (default name should be `repos.yml`).
-2. Each repository entry in the configuration file should include:
+1. App should load a list of repositories to be managed from a YAML file. By default, use `~/.config/repops/repos.yml`.
+   Both `.yml` and `.yaml` extensions are acceptable.
+2. Each repository entry in the configuration file must include all of the following keys:
    1. URL: URL of the remote git repository,
    2. default branch name: default branch to use (e.g. `main`, `develop`),
    3. local path: local filesystem path where the repository should be cloned,
    4. server type: type of git server (GitHub, Azure DevOps, or GitLab) to properly handle platform-specific operations.
-3. Config file should allow dividing repositories into subgroups.
+      If the server type is missing or unrecognized, the app should fail with a clear error message.
+3. If any entry is missing any key, then app should fail with descriptive error.
+4. Config file should allow dividing repositories into subgroups.
    1. Subgroups are represented as top-level keys in the YAML file, with each repository as a nested subkey under it.
    2. Only a single level of grouping is supported.
-   3. If a repository is not part of any group, it should be automatically included under a predefined "default" group.
-   4. Config should follow syntax as in [`example`](../../examples/config/config.example.yaml).
-4. App should allow checking if all repositories defined in config are actually available both locally and remotely:
+   3. If repository is not part of any group, it should remain ungrouped at the top level in the config file. The
+      `default` group should be automatically added internally for implementation purposes.
+   4. Config should follow syntax as in [`example`](../../examples/config/repos.yml).
+5. App should allow checking if all repositories defined in config are actually available both locally and remotely:
    1. Locally: verify if the repository exists at the specified local path.
    2. Remotely: verify if the remote repository URL is accessible (e.g. using a git command like `ls-remote`).
    3. If a repository is not available locally, the app should fetch (clone) it.
-5. App should allow creating, editing, saving and removing config files.
+6. App should allow creating, editing, saving and removing config files.
 
 ### 2. Operations
 

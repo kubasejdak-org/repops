@@ -2,6 +2,7 @@
 
 - Act as a senior software engineer.
 - Use best coding standards for each programming language that you have to use.
+- When I refer to "project requirements", I mean the requirements defined in #file:../../docs directory.
 - Do not duplicate code. If you have to add similar functionality more than once, then extract it into a separate module
   or function and reuse.
 - Do not add comments for obvious things. Add them where code is complicated or solution may be less known.
