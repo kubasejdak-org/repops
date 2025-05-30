@@ -40,7 +40,8 @@
    2. source type, which can be one of: `repops`, `plugin` (with plugin's package name) or `local` (with filesystem
       location),
    3. methods for operation execution, validation, and metadata (like name, description, arguments),
-   4. support for operation dependencies (operations that must be run before/after),
+   4. support for operation dependencies (operations that must be run before/after) via list of operation IDs that must
+      precede it somewhere in the pipeline.
    5. standard error handling (via exceptions) and logging interfaces (via logger).
 5. Operation can have a set of expected arguments to be used by the operation.
    1. Arguments can be of any type, which is supported by YAML syntax.
@@ -148,7 +149,7 @@
       10. displaying progress of the currently executed pipeline.
 2. App should have a console CLI mode for simple one-shot operations.
    1. It should be based on `Typer` library.
-   2. It should allow doing everything as in TUI mode, but
+   2. It should allow doing everything as in TUI mode, but via single-shot CLI arguments.
 3. App should have an MCP server mode to allow integration with LLMs supporting MCP.
    1. It should be based on the official MCP SDK.
    2. It should allow doing everything as in TUI mode.
