@@ -1,7 +1,7 @@
 [project]
 name = "repops"
 version = "0.1.0"
-description = "Tool for managing and updating repositories"
+description = "Tool for configuring, managing and automating file operations across multiple git repositories"
 readme = "README.md"
 authors = [{ name = "Kuba Sejdak", email = "kuba.sejdak@gmail.com" }]
 requires-python = ">=3.12"
