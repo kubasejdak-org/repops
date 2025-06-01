@@ -5,7 +5,10 @@ description = "Tool for configuring, managing and automating file operations acr
 readme = "README.md"
 authors = [{ name = "Kuba Sejdak", email = "kuba.sejdak@gmail.com" }]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "pyyaml>=6.0.2",
+    "typer>=0.16.0",
+]
 
 [project.scripts]
 repops = "repops:main"
